@@ -10,6 +10,9 @@ on:
         description: Build custom package inside "custom-packages"
         type: boolean
         default: false
+      CUSTOM_PACKAGE_NAMES:
+        description: Name of all custom package inside "custom-packages"
+        default: luci-app-argon-config luci-theme-argon
       OPENWRT_DOWNLOAD_URL:
         description: Openwrt base download url
         default: https://downloads.openwrt.org/releases/
@@ -28,6 +31,7 @@ on:
 
 env:
   BUILD_CUSTOM_PACKAGE: ${{inputs.BUILD_CUSTOM_PACKAGE || false}}
+  CUSTOM_PACKAGE_NAMES: ${{(inputs.BUILD_CUSTOM_PACKAGE && inputs.CUSTOM_PACKAGE_NAMES) || ''}}
   OPENWRT_DOWNLOAD_URL: ${{inputs.OPENWRT_DOWNLOAD_URL || 'https://downloads.openwrt.org/releases/'}}
   OPENWRT_VERSION: ${{inputs.OPENWRT_VERSION || '23.05.2'}}
   OPENWRT_TARGET: ${{inputs.OPENWRT_TARGET || 'ramips/mt7621'}}
@@ -73,10 +77,11 @@ jobs:
           wget ${{ env.IMAGE_BUILDER_URL }}
           tar -J -x -f ${{env.IMAGE_BUILDER_FILE_NAME}}.tar.xz
 
-      - name: Copy custom packages
+      - name: Copy custom packages and add custom package
         if: ${{ env.BUILD_CUSTOM_PACKAGE }}
         run: |
           rsync -hav custom-packages/* ${{env.IMAGE_BUILDER_FILE_NAME}}/packages/
+          echo "PACKPAGES=${{env.PACKAGES}} ${{env.CUSTOM_PACKAGE_NAMES}}"
 
       - name: Save cache
         if: ${{ env.NEED_DOWNLOAD == 'true' }}
