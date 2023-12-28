@@ -78,10 +78,12 @@ jobs:
           make image \
           PROFILE=${{env.PROFILE}} \
           PACKAGES="${{env.PACKAGES}}"
+          ls -lah /bin/targets/${{ env.OPENWRT_TARGET }}
+
       - name: Upload image
         uses: actions/upload-artifact@v3
         with:
-          name: openwrt-${{env.OPENWRT_VERSION}}-{{env.OPENWRT_TARGET_AS_NAME}}-${{env.PROFILE}}
-          path: bin/target/${{env.OPENWRT_TARGET}}
+          name: openwrt-${{ env.OPENWRT_VERSION }}-{{env.OPENWRT_TARGET_AS_NAME}}-${{ env.PROFILE }}
+          path: ${{ env.IMAGE_BUILDER_FILE_NAME }}/bin/targets/${{ env.OPENWRT_TARGET }}
           retention-days: 5
 
