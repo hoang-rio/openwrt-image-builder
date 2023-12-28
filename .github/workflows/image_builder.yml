@@ -45,8 +45,10 @@ jobs:
       - name: Setup variables
         run: |
           OPENWRT_TARGET=${{ env.OPENWRT_TARGET }}
-          IMAGE_BUILDER_FILE_NAME=openwrt-imagebuilder-${{ env.OPENWRT_VERSION }}-${OPENWRT_TARGET////-}.Linux-x86_64
+          OPENWRT_TARGET_AS_NAME=${OPENWRT_TARGET////-}
+          IMAGE_BUILDER_FILE_NAME=openwrt-imagebuilder-${{ env.OPENWRT_VERSION }}-${OPENWRT_TARGET_AS_NAME}.Linux-x86_64
           IMAGE_BUILDER_URL=${{ env.OPENWRT_DOWNLOAD_URL }}/${{ env.OPENWRT_VERSION }}/targets/${{ env.OPENWRT_TARGET }}/$IMAGE_BUILDER_FILE_NAME.tar.xz
+          echo "OPENWRT_TARGET_AS_NAME=${OPENWRT_TARGET_AS_NAME}" >> $GITHUB_ENV
           echo "IMAGE_BUILDER_FILE_NAME=${IMAGE_BUILDER_FILE_NAME}" >> $GITHUB_ENV
           echo "IMAGE_BUILDER_URL=${IMAGE_BUILDER_URL}" >> $GITHUB_ENV
 
@@ -68,11 +70,8 @@ jobs:
       - name: Download and extract image builder
         if: ${{ env.NEED_DOWNLOAD == 'true' }}
         run: |
-          OPENWRT_TARGET=${{ env.OPENWRT_TARGET }}
-          IMAGE_BUILDER_FILE_NAME=openwrt-imagebuilder-${{ env.OPENWRT_VERSION }}-${OPENWRT_TARGET////-}.Linux-x86_64
-          IMAGE_BUILDER_URL=${{ env.OPENWRT_DOWNLOAD_URL }}/${{ env.OPENWRT_VERSION }}/targets/${{ env.OPENWRT_TARGET }}/$IMAGE_BUILDER_FILE_NAME.tar.xz
-          wget $IMAGE_BUILDER_URL
-          tar -J -x -f $IMAGE_BUILDER_FILE_NAME.tar.xz
+          wget ${{ env.IMAGE_BUILDER_URL }}
+          tar -J -x -f ${{env.IMAGE_BUILDER_FILE_NAME}}.tar.xz
 
       - name: Copy custom packages
         if: ${{ env.BUILD_CUSTOM_PACKAGE }}
@@ -97,7 +96,7 @@ jobs:
       - name: Upload image
         uses: actions/upload-artifact@v3
         with:
-          name: openwrt-${{ env.OPENWRT_VERSION }}-{{env.OPENWRT_TARGET_AS_NAME}}-${{ env.PROFILE }}
+          name: openwrt-${{ env.OPENWRT_VERSION }}-${{ env.OPENWRT_TARGET_AS_NAME }}-${{ env.PROFILE }}
           path: ${{ env.IMAGE_BUILDER_FILE_NAME }}/bin/targets/${{ env.OPENWRT_TARGET }}
           retention-days: 5
 
