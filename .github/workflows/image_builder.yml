@@ -57,7 +57,7 @@ jobs:
           fi
 
       - name: Download and extract image builder
-        if: ${{ env.NEED_DOWNLOAD }}
+        if: ${{ env.NEED_DOWNLOAD == 'true' }}
         run: |
           OPENWRT_TARGET=${{ env.OPENWRT_TARGET }}
           IMAGE_BUILDER_FILE_NAME=openwrt-imagebuilder-${{ env.OPENWRT_VERSION }}-${OPENWRT_TARGET////-}.Linux-x86_64
