@@ -1,4 +1,4 @@
-name: "Openwrt release image builder"
+name: "Openwrt image builder"
 
 on:
   push:
@@ -21,7 +21,7 @@ on:
         description: Openwrt base download url
         default: https://downloads.openwrt.org/releases/
       OPENWRT_VERSION:
-        description: Openwrt release version
+        description: Openwrt version
         default: 23.05.2
       OPENWRT_TARGET:
         description: Openwrt target to build
