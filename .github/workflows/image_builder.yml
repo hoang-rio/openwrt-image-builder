@@ -19,7 +19,7 @@ on:
         default: true
       OPENWRT_DOWNLOAD_URL:
         description: Openwrt base download url
-        default: https://downloads.openwrt.org/releases/
+        default: https://downloads.openwrt.org/releases
       OPENWRT_VERSION:
         description: Openwrt version
         default: 23.05.2
@@ -37,7 +37,7 @@ env:
   BUILD_CUSTOM_PACKAGE: ${{inputs.BUILD_CUSTOM_PACKAGE || false}}
   CUSTOM_PACKAGE_NAMES: ${{(inputs.BUILD_CUSTOM_PACKAGE && inputs.CUSTOM_PACKAGE_NAMES) || ''}}
   UPLOAD_SYSUPGRADE_ONLY: ${{inputs.UPLOAD_SYSUPGRADE_ONLY || false}}
-  OPENWRT_DOWNLOAD_URL: ${{inputs.OPENWRT_DOWNLOAD_URL || 'https://downloads.openwrt.org/releases/'}}
+  OPENWRT_DOWNLOAD_URL: ${{inputs.OPENWRT_DOWNLOAD_URL || 'https://downloads.openwrt.org/releases'}}
   OPENWRT_VERSION: ${{inputs.OPENWRT_VERSION || '23.05.2'}}
   OPENWRT_TARGET: ${{inputs.OPENWRT_TARGET || 'ramips/mt7621'}}
   PROFILE: ${{inputs.OPENWRT_PROFILE || 'xiaomi_mi-router-3g'}}
@@ -139,13 +139,12 @@ jobs:
           artifacts: "${{ env.BUILD_TARGET_DIR }}/*"
           body: |
             ### Build information:
-            * Build target: ${{ env.OPENWRT_TARGET }}
-            * Device profile: ${{ env.PROFILE }}
-            * Openwrt version: ${{ env.OPENWRT_VERSION }}
-            * Image builder download from: ${{ env.IMAGE_BUILDER_URL }}
-            * Installed package:
+            * Build target: **${{ env.OPENWRT_TARGET }}**
+            * Device profile: **${{ env.PROFILE }}**
+            * Openwrt version: **${{ env.OPENWRT_VERSION }}**
+            * Image builder downloaded from: ${{ env.IMAGE_BUILDER_URL }}
             <details>
-            <summary>See all</summary>
+            <summary>**Installed package:**</summary>
 
             ```
             ${{ env.PACKAGES }}
