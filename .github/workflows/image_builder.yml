@@ -92,7 +92,7 @@ jobs:
           make image \
           PROFILE=${{env.PROFILE}} \
           PACKAGES="${{env.PACKAGES}}"
-          ls -lah /bin/targets/${{ env.OPENWRT_TARGET }}
+          ls -lah bin/targets/${{ env.OPENWRT_TARGET }}
 
       - name: Upload image
         uses: actions/upload-artifact@v3
