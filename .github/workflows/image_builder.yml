@@ -136,5 +136,5 @@ jobs:
         uses: ncipollo/release-action@v1
         if: ${{ github.event_name == 'push' }}
         with:
-          artifacts: "${{ env.BUILD_TARGET_DIR }}/*.bin,${{ env.BUILD_TARGET_DIR }}/profiles.json,${{ env.BUILD_TARGET_DIR }}/sha256sums"
+          artifacts: "${{ env.BUILD_TARGET_DIR }}/*"
 
