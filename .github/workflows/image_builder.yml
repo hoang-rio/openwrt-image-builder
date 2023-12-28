@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       BUILD_CUSTOM_PACKAGE:
-        description: "Build custom package in custom package folder"
+        description: Build custom package inside "custom-packages"
         type: boolean
         default: false
       OPENWRT_DOWNLOAD_URL:
