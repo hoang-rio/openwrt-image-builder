@@ -44,8 +44,7 @@ jobs:
       - name: Restore cache
         uses: actions/cache/restore@v3
         with:
-          path: |
-            ${{env.IMAGE_BUILDER_FILE_NAME}}
+          path: ${{env.IMAGE_BUILDER_FILE_NAME}}
           key: ${{env.IMAGE_BUILDER_FILE_NAME}}
 
       - name: Check file 
@@ -69,8 +68,7 @@ jobs:
       - name: Save cache
         uses: actions/cache/save@v3
         with:
-          path: |
-            ${{env.IMAGE_BUILDER_FILE_NAME}}
+          path: ${{env.IMAGE_BUILDER_FILE_NAME}}
           key: ${{env.IMAGE_BUILDER_FILE_NAME}}
 
       - name: Build openwrt image
