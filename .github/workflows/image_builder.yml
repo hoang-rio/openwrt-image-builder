@@ -144,7 +144,7 @@ jobs:
             * Openwrt version: **${{ env.OPENWRT_VERSION }}**
             * Image builder downloaded from: ${{ env.IMAGE_BUILDER_URL }}
             <details>
-            <summary>**Installed package:**</summary>
+            <summary>Installed package</summary>
 
             ```
             ${{ env.PACKAGES }}
