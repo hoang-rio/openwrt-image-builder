@@ -131,4 +131,5 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         with:
           artifacts: ${{ env.IMAGE_BUILDER_FILE_NAME }}/bin/targets/${{ env.OPENWRT_TARGET }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
