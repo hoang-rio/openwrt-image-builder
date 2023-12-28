@@ -77,7 +77,7 @@ jobs:
           cd ${{ env.IMAGE_BUILDER_FILE_NAME }}
           make image \
           PROFILE=${{env.PROFILE}} \
-          PACKAGES=${{env.PACKAGES}}
+          PACKAGES="${{env.PACKAGES}}"
       - name: Upload image
         uses: actions/upload-artifact@v3
         with:
