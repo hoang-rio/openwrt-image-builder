@@ -35,9 +35,9 @@ jobs:
     steps:
       - name: Download and extract image builder
         run: |
-          OPENWRT_TARGET=${{env.OPENWRT_TARGET}}
-          IMAGE_BUILDER_FILE_NAME=openwrt-imagebuilder-${{ env.OPENWRT_VERSION }}-${OPENWRT_TARGET///-}.Linux-x86_64
-          IMAGE_BUILDER_URL=${{ env.OPENWRT_DOWNLOAD_URL }}/${{ env.OPENWRT_VERSION }}/${{ env.OPENWRT_TARGET }}/$IMAGE_BUILDER_FILE_NAME.tar.xz
+          OPENWRT_TARGET=${{ env.OPENWRT_TARGET }}
+          IMAGE_BUILDER_FILE_NAME=openwrt-imagebuilder-${{ env.OPENWRT_VERSION }}-${OPENWRT_TARGET////-}.Linux-x86_64
+          IMAGE_BUILDER_URL=${{ env.OPENWRT_DOWNLOAD_URL }}/${{ env.OPENWRT_VERSION }}/targets/${{ env.OPENWRT_TARGET }}/$IMAGE_BUILDER_FILE_NAME.tar.xz
           wget $IMAGE_BUILDER_URL
           tar -J -x -f $IMAGE_BUILDER_FILE_NAME.tar.gz
           echo "IMAGE_BUILDER_FILE_NAME=${IMAGE_BUILDER_FILE_NAME}" >> $GITHUB_ENV
