@@ -108,7 +108,7 @@ jobs:
           ls -lah bin/targets/${{ env.OPENWRT_TARGET }}
 
       - name: Upload sysupgrade output
-        if: ${{ env.UPLOAD_SYSUPGRADE_ONLY }}
+        if: ${{ github.event_name == 'workflow_dispatch' && env.UPLOAD_SYSUPGRADE_ONLY }}
         uses: actions/upload-artifact@v3
         with:
           name: openwrt-${{ env.OPENWRT_VERSION }}-${{ env.OPENWRT_TARGET_AS_NAME }}-${{ env.PROFILE }}-sysupgrade
@@ -119,14 +119,15 @@ jobs:
           retention-days: 5
 
       - name: Upload all output
-        if: ${{ !env.UPLOAD_SYSUPGRADE_ONLY }}
+        if: ${{ github.event_name == 'workflow_dispatch' && !env.UPLOAD_SYSUPGRADE_ONLY }}
         uses: actions/upload-artifact@v3
         with:
           name: openwrt-${{ env.OPENWRT_VERSION }}-${{ env.OPENWRT_TARGET_AS_NAME }}-${{ env.PROFILE }}
           path: ${{ env.IMAGE_BUILDER_FILE_NAME }}/bin/targets/${{ env.OPENWRT_TARGET }}
           retention-days: 5
 
-      - uses: ncipollo/release-action@v1
+      - name: Create release
+        uses: ncipollo/release-action@v1
         if: ${{ github.event_name == 'push' }}
         with:
           artifacts: ${{ env.IMAGE_BUILDER_FILE_NAME }}/bin/targets/${{ env.OPENWRT_TARGET }}
