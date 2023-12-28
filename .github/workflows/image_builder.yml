@@ -81,7 +81,7 @@ jobs:
         if: ${{ env.BUILD_CUSTOM_PACKAGE }}
         run: |
           rsync -hav custom-packages/* ${{env.IMAGE_BUILDER_FILE_NAME}}/packages/
-          echo "PACKPAGES=${{env.PACKAGES}} ${{env.CUSTOM_PACKAGE_NAMES}}" >> $GITHUB_ENV
+          echo "PACKAGES=${{env.PACKAGES}} ${{env.CUSTOM_PACKAGE_NAMES}}" >> $GITHUB_ENV
 
       - name: Save cache
         if: ${{ env.NEED_DOWNLOAD == 'true' }}
