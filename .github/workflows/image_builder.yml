@@ -66,6 +66,7 @@ jobs:
           tar -J -x -f $IMAGE_BUILDER_FILE_NAME.tar.xz
 
       - name: Save cache
+        if: ${{ env.NEED_DOWNLOAD == 'true' }}
         uses: actions/cache/save@v3
         with:
           path: ${{env.IMAGE_BUILDER_FILE_NAME}}
