@@ -13,6 +13,10 @@ on:
       CUSTOM_PACKAGE_NAMES:
         description: Name of all custom package inside "custom-packages"
         default: luci-app-argon-config luci-theme-argon
+      UPLOAD_SYSUPGRADE_ONLY:
+        description: Save sysupgrade only artifact
+        type: boolean
+        default: true
       OPENWRT_DOWNLOAD_URL:
         description: Openwrt base download url
         default: https://downloads.openwrt.org/releases/
@@ -32,6 +36,7 @@ on:
 env:
   BUILD_CUSTOM_PACKAGE: ${{inputs.BUILD_CUSTOM_PACKAGE || false}}
   CUSTOM_PACKAGE_NAMES: ${{(inputs.BUILD_CUSTOM_PACKAGE && inputs.CUSTOM_PACKAGE_NAMES) || ''}}
+  UPLOAD_SYSUPGRADE_ONLY: ${{inputs.UPLOAD_SYSUPGRADE_ONLY || false}}
   OPENWRT_DOWNLOAD_URL: ${{inputs.OPENWRT_DOWNLOAD_URL || 'https://downloads.openwrt.org/releases/'}}
   OPENWRT_VERSION: ${{inputs.OPENWRT_VERSION || '23.05.2'}}
   OPENWRT_TARGET: ${{inputs.OPENWRT_TARGET || 'ramips/mt7621'}}
@@ -59,8 +64,8 @@ jobs:
       - name: Restore cache
         uses: actions/cache/restore@v3
         with:
-          path: ${{env.IMAGE_BUILDER_FILE_NAME}}
-          key: ${{env.IMAGE_BUILDER_FILE_NAME}}
+          path: ${{ env.IMAGE_BUILDER_FILE_NAME }}
+          key: ${{ env.IMAGE_BUILDER_FILE_NAME }}
 
       - name: Check file 
         shell: bash
@@ -87,18 +92,30 @@ jobs:
         if: ${{ env.NEED_DOWNLOAD == 'true' }}
         uses: actions/cache/save@v3
         with:
-          path: ${{env.IMAGE_BUILDER_FILE_NAME}}
-          key: ${{env.IMAGE_BUILDER_FILE_NAME}}
+          path: ${{ env.IMAGE_BUILDER_FILE_NAME }}
+          key: ${{ env.IMAGE_BUILDER_FILE_NAME }}
 
       - name: Build openwrt image
         run: |
           cd ${{ env.IMAGE_BUILDER_FILE_NAME }}
           make image \
-          PROFILE=${{env.PROFILE}} \
-          PACKAGES="${{env.PACKAGES}}"
+          PROFILE=${{ env.PROFILE }} \
+          PACKAGES="${{ env.PACKAGES }}"
           ls -lah bin/targets/${{ env.OPENWRT_TARGET }}
 
-      - name: Upload image
+      - name: Upload sysupgrade output
+        if: ${{ env.UPLOAD_SYSUPGRADE_ONLY }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: openwrt-${{ env.OPENWRT_VERSION }}-${{ env.OPENWRT_TARGET_AS_NAME }}-${{ env.PROFILE }}-sysupgrade
+          path: |
+            ${{ env.IMAGE_BUILDER_FILE_NAME }}/bin/targets/${{ env.OPENWRT_TARGET }}/openwrt-${{ env.OPENWRT_VERSION }}-${{ env.OPENWRT_TARGET_AS_NAME }}-${{ env.PROFILE }}-squashfs-sysupgrade.bin
+            ${{ env.IMAGE_BUILDER_FILE_NAME }}/bin/targets/${{ env.OPENWRT_TARGET }}/profiles.json
+            ${{ env.IMAGE_BUILDER_FILE_NAME }}/bin/targets/${{ env.OPENWRT_TARGET }}/sha256sums
+          retention-days: 5
+
+      - name: Upload all output
+        if: ${{ !env.UPLOAD_SYSUPGRADE_ONLY }}
         uses: actions/upload-artifact@v3
         with:
           name: openwrt-${{ env.OPENWRT_VERSION }}-${{ env.OPENWRT_TARGET_AS_NAME }}-${{ env.PROFILE }}
