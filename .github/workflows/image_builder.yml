@@ -12,7 +12,7 @@ on:
         default: false
       CUSTOM_PACKAGE_NAMES:
         description: Name of all custom package inside "custom-packages"
-        default: luci-app-argon-config luci-theme-argon
+        default: luci-app-argon-config luci-theme-argon wrtbwmon luci-app-wrtbwmon
       UPLOAD_SYSUPGRADE_ONLY:
         description: Save sysupgrade only artifact
         type: boolean
