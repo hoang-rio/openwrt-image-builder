@@ -115,7 +115,7 @@ jobs:
 
       - name: Upload sysupgrade output
         if: ${{ github.event_name == 'workflow_dispatch' && env.UPLOAD_SYSUPGRADE_ONLY }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.OUTPUT_BASE_NAME }}-sysupgrade
           path: |
@@ -126,7 +126,7 @@ jobs:
 
       - name: Upload all output
         if: ${{ github.event_name == 'workflow_dispatch' && !env.UPLOAD_SYSUPGRADE_ONLY }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.OUTPUT_BASE_NAME }}
           path: ${{ env.BUILD_TARGET_DIR }}
