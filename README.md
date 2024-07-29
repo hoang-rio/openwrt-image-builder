@@ -5,8 +5,8 @@ This repo create actions follow instruction at https://openwrt.org/docs/guide-us
 
 * Build target: **ramips/mt7621**
 * Device profile: **xiaomi_mi-router-3g**
-* Openwrt version: **23.05.3**
-* Image builder downloaded from: https://downloads.openwrt.org/releases/23.05.3/targets/ramips/mt7621/openwrt-imagebuilder-23.05.3-ramips-mt7621.Linux-x86_64.tar.xz
+* Openwrt version: **23.05.4**
+* Image builder downloaded from: https://downloads.openwrt.org/releases/23.05.4/targets/ramips/mt7621/openwrt-imagebuilder-23.05.4-ramips-mt7621.Linux-x86_64.tar.xz
 <details>
 <summary>Installed package</summary>
 
