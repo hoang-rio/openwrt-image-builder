@@ -155,4 +155,11 @@ jobs:
             ${{ env.PACKAGES }}
             ```
             </details>
+            <details>
+            <summary>Disabled services</summary>
+
+            ```
+            ${{ env.DISABLED_SERVICES }}
+            ```
+            </details>
 
