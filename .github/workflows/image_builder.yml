@@ -119,7 +119,7 @@ jobs:
           ls -lah bin/targets/${{ env.OPENWRT_TARGET }}
 
       - name: Upload sysupgrade output
-        if: ${{ github.event_name == 'workflow_dispatch' && env.UPLOAD_SYSUPGRADE_ONLY }}
+        if: ${{ github.event_name == 'workflow_dispatch' && env.UPLOAD_SYSUPGRADE_ONLY == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.OUTPUT_BASE_NAME }}-sysupgrade
@@ -130,7 +130,7 @@ jobs:
           retention-days: 5
 
       - name: Upload all output
-        if: ${{ github.event_name == 'workflow_dispatch' && !env.UPLOAD_SYSUPGRADE_ONLY }}
+        if: ${{ github.event_name == 'workflow_dispatch' && env.UPLOAD_SYSUPGRADE_ONLY == 'false' }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.OUTPUT_BASE_NAME }}
