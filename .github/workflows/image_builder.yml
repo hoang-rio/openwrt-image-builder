@@ -138,9 +138,10 @@ jobs:
           retention-days: 5
 
       - name: Create release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1.14.0
         if: ${{ github.event_name == 'push' }}
         with:
+          name: "${{ github.ref_name }} ${{ env.PROFILE }}"
           artifacts: "${{ env.BUILD_TARGET_DIR }}/*"
           body: |
             ### Build information:
