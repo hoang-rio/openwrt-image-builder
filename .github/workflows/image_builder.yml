@@ -101,10 +101,11 @@ jobs:
         if: ${{ env.NEED_DOWNLOAD == 'true' }}
         run: |
           wget ${{ env.IMAGE_BUILDER_URL }}
+          IMAGE_BUILD_FILE=${{env.IMAGE_BUILDER_FILE_NAME}}.tar${{ env.BUILDER_FILE_EXT }}
           if [[ ${{ env.BUILDER_FILE_EXT }} == ".zst" ]]; then
-            tar --zstd -x -f ${{env.IMAGE_BUILDER_FILE_NAME}}.tar${{ env.BUILDER_FILE_EXT }}
+            tar --zstd -x -f ${IMAGE_BUILD_FILE}
           else
-            tar -J -x -f ${{env.IMAGE_BUILDER_FILE_NAME}}.tar${{ env.BUILDER_FILE_EXT }}
+            tar -J -x -f ${IMAGE_BUILD_FILE}
           fi
 
       - name: Copy custom packages and add custom package
