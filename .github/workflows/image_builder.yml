@@ -102,7 +102,7 @@ jobs:
         run: |
           wget ${{ env.IMAGE_BUILDER_URL }}
           if [[ ${{ env.BUILDER_FILE_EXT }} == ".zst" ]]; then
-            tar --zstd -J -x -f ${{env.IMAGE_BUILDER_FILE_NAME}}.tar${{ env.BUILDER_FILE_EXT }}
+            tar --zstd -x -f ${{env.IMAGE_BUILDER_FILE_NAME}}.tar${{ env.BUILDER_FILE_EXT }}
           else
             tar -J -x -f ${{env.IMAGE_BUILDER_FILE_NAME}}.tar${{ env.BUILDER_FILE_EXT }}
           fi
