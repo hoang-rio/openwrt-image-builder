@@ -70,11 +70,12 @@ jobs:
           IMAGE_BUILDER_FILE_NAME=openwrt-imagebuilder-${{ env.OPENWRT_VERSION }}-${OPENWRT_TARGET_AS_NAME}.Linux-x86_64
           IMAGE_BUILDER_URL=${{ env.OPENWRT_DOWNLOAD_URL }}/${{ env.OPENWRT_VERSION }}/targets/$OPENWRT_TARGET/$IMAGE_BUILDER_FILE_NAME.tar
           CURL_OUTPUT=$(curl --HEAD ${IMAGE_BUILDER_URL}.xz)
+          BUILDER_FILE_EXT=${{ env.BUILDER_FILE_EXT }}
           if [[ $(echo $CURL_OUTPUT | grep "404") != "" ]]; then
             BUILDER_FILE_EXT=".zst"
             echo "BUILDER_FILE_EXT=${BUILDER_FILE_EXT}" >> $GITHUB_ENV
-            IMAGE_BUILDER_URL=${IMAGE_BUILDER_URL}.zst
           fi
+          IMAGE_BUILDER_URL=${IMAGE_BUILDER_URL}${BUILDER_FILE_EXT}
           BUILD_TARGET_DIR=$IMAGE_BUILDER_FILE_NAME/bin/targets/$OPENWRT_TARGET
           OUTPUT_BASE_NAME=openwrt-${{ env.OPENWRT_VERSION }}-${OPENWRT_TARGET_AS_NAME}-${{ env.PROFILE }}
           echo "IMAGE_BUILDER_FILE_NAME=${IMAGE_BUILDER_FILE_NAME}" >> $GITHUB_ENV
