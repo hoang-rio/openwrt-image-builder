@@ -3,7 +3,7 @@ name: "Openwrt image builder"
 on:
   push:
     tags:
-      '*'
+      '**'
   workflow_dispatch:
     inputs:
       BUILD_CUSTOM_PACKAGE:
