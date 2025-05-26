@@ -1,4 +1,4 @@
-name: "Openwrt image builder"
+name: Router firmware image builder
 
 on:
   push:
