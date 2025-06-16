@@ -15,3 +15,10 @@ adguardhome announce aria2 aria2-openssl ariang base-files block-mount busybox c
 ```
 </details>
 
+<details>
+<summary>Disabled services</summary>
+
+```
+tinyproxy
+```
+</details>
