@@ -15,3 +15,10 @@ adguardhome attendedsysupgrade-common base-files busybox ca-bundle cgi-io curl d
 ```
 </details>
 
+<details>
+<summary>Disabled services</summary>
+
+```
+adguardhome
+```
+</details>
