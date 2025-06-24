@@ -3,10 +3,10 @@ This repo create actions follow instruction at https://openwrt.org/docs/guide-us
 
 ### Default build information:
 
-* Build target: **ramips/mt7621**
-* Device profile: **xiaomi_mi-router-3g**
+* Build target: **mediatek/filogic**
+* Device profile: **cmcc_rax3000m**
 * Openwrt version: **24.10.1**
-* Image builder downloaded from: https://downloads.openwrt.org/releases/24.10.1/targets/ramips/mt7621/openwrt-imagebuilder-24.10.1-ramips-mt7621.Linux-x86_64.tar.zst
+* Image builder downloaded from: https://downloads.openwrt.org/releases/24.10.1/targets/mediatek/filogic/openwrt-imagebuilder-24.10.1-ramips-mt7621.Linux-x86_64.tar.zst
 <details>
 <summary>Installed package</summary>
 
