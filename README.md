@@ -4,7 +4,7 @@ This repo create actions follow instruction at https://openwrt.org/docs/guide-us
 ### Default build information:
 
 * Build target: **mediatek/filogic**
-* Device profile: **cmcc_rax3000me**
+* Device profile: **cmcc_rax3000m**
 * Immortalwrt version: **24.10.1**
 * Image builder downloaded from: https://downloads.immortalwrt.org/releases/24.10.1/targets/mediatek/filogic/immortalwrt-imagebuilder-24.10.1-ramips-mt7621.Linux-x86_64.tar.zst
 <details>
