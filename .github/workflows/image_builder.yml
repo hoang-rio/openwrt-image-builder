@@ -67,7 +67,7 @@ jobs:
         run: |
           OPENWRT_TARGET=${{ env.OPENWRT_TARGET }}
           OPENWRT_TARGET_AS_NAME=${OPENWRT_TARGET////-}
-          IMAGE_BUILDER_FILE_NAME=kwrt-imagebuilder-${{ env.OPENWRT_VERSION }}-${OPENWRT_TARGET_AS_NAME}.Linux-x86_64
+          IMAGE_BUILDER_FILE_NAME=kwrt-imagebuilder-${OPENWRT_TARGET_AS_NAME}.Linux-x86_64
           IMAGE_BUILDER_URL=${{ env.OPENWRT_DOWNLOAD_URL }}/${{ env.OPENWRT_VERSION }}/targets/$OPENWRT_TARGET/$IMAGE_BUILDER_FILE_NAME.tar
           CURL_OUTPUT=$(curl --HEAD ${IMAGE_BUILDER_URL}.xz)
           BUILDER_FILE_EXT=${{ env.BUILDER_FILE_EXT }}
