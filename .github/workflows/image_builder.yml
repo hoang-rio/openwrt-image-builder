@@ -127,7 +127,7 @@ jobs:
           # switch to online repository
           sed -i 's|file://www/wwwroot/|https://|g' repositories.conf
           # add openwrt repository for missing packages
-          echo "#Openwrt repo\nsrc openwrt_packages https://downloads.openwrt.org/releases/24.10.3/packages/aarch64_cortex-a53/packages" >> repositories.conf
+          echo "src openwrt_packages https://downloads.openwrt.org/releases/24.10.3/packages/aarch64_cortex-a53/packages" >> repositories.conf
           make image \
           PROFILE=${{ env.PROFILE }} \
           PACKAGES="${{ env.PACKAGES }}" \
