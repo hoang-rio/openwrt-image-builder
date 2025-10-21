@@ -18,6 +18,6 @@ adguardhome aria2 aria2-openssl ariang attr autocore automount avahi-dbus-daemon
 <summary>Disabled services</summary>
 
 ```
-adguardhome mwan3 xl2tpd https-dns-proxy ipsec swanctl
+https-dns-proxy
 ```
 </details>
