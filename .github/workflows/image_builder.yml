@@ -10,6 +10,10 @@ on:
         description: Build custom package inside "custom-packages"
         type: boolean
         default: false
+      COPY_CUSTOM_FILES:
+        description: Copy custom files inside "custom-files" to image builder
+        type: boolean
+        default: false
       CUSTOM_PACKAGE_NAMES:
         description: Name of all custom package inside "custom-packages"
         default: luci-app-alpha-config luci-theme-alpha wrtbwmon luci-app-wrtbwmon
@@ -39,6 +43,8 @@ on:
 env:
   BUILD_CUSTOM_PACKAGE: ${{github.event_name == 'push' || inputs.BUILD_CUSTOM_PACKAGE}}
   CUSTOM_PACKAGE_NAMES: ${{inputs.CUSTOM_PACKAGE_NAMES || 'luci-app-alpha-config luci-theme-alpha wrtbwmon luci-app-wrtbwmon'}}
+  COPY_CUSTOM_FILES: ${{github.event_name == 'push' || inputs.COPY_CUSTOM_FILES}}
+  FILES: ""
   UPLOAD_SYSUPGRADE_ONLY: ${{inputs.UPLOAD_SYSUPGRADE_ONLY || false}}
   OPENWRT_DOWNLOAD_URL: ${{inputs.OPENWRT_DOWNLOAD_URL || 'https://dl.openwrt.ai/releases'}}
   OPENWRT_VERSION: ${{inputs.OPENWRT_VERSION || '24.10'}}
@@ -115,6 +121,12 @@ jobs:
           rsync -hav custom-packages/* ${{env.IMAGE_BUILDER_FILE_NAME}}/packages/
           echo "PACKAGES=${{env.PACKAGES}} ${{env.CUSTOM_PACKAGE_NAMES}}" >> $GITHUB_ENV
 
+      - name: Copy custom files to image builder
+        if: ${{ env.COPY_CUSTOM_FILES }}
+        run: |
+          rsync -hav custom-files/* ${{env.IMAGE_BUILDER_FILE_NAME}}/files/
+          echo "FILES=files" >> $GITHUB_ENV
+
       - name: Save cache
         if: ${{ env.NEED_DOWNLOAD == 'true' }}
         uses: actions/cache/save@v4
@@ -133,7 +145,8 @@ jobs:
           make image \
           PROFILE=${{ env.PROFILE }} \
           PACKAGES="${{ env.PACKAGES }}" \
-          DISABLED_SERVICES="${{ env.DISABLED_SERVICES }}"
+          DISABLED_SERVICES="${{ env.DISABLED_SERVICES }}" \
+          FILES="${{ env.FILES }}" \
           ls -lah bin/targets/${{ env.OPENWRT_TARGET }}
 
       - name: Upload sysupgrade output
