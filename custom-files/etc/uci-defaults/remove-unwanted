@@ -1,0 +1,7 @@
+#!/bin/sh
+# Custom script to run at first boot
+# Place your custom commands below
+
+opkg remove --autoremove luci-app-wizard
+
+exit 0
