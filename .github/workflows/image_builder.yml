@@ -138,10 +138,12 @@ jobs:
           cd ${{ env.IMAGE_BUILDER_FILE_NAME }}
           # switch to online repository
           sed -i 's|file://www/wwwroot/|https://|g' repositories.conf
+          # change to gz format
+          sed -i 's|src |src/gz |g' repositories.conf
           # add openwrt repository for missing packages
           echo "# Openwrt repo for missing package" >> repositories.conf
-          echo "src openwrt_packages https://downloads.openwrt.org/releases/24.10.3/packages/aarch64_cortex-a53/packages" >> repositories.conf
-          echo "src openwrt_luci https://downloads.openwrt.org/releases/24.10.3/packages/aarch64_cortex-a53/luci" >> repositories.conf
+          echo "src/gz openwrt_packages https://downloads.openwrt.org/releases/24.10.3/packages/aarch64_cortex-a53/packages" >> repositories.conf
+          echo "src/gz openwrt_luci https://downloads.openwrt.org/releases/24.10.3/packages/aarch64_cortex-a53/luci" >> repositories.conf
           cat repositories.conf
           make image \
           PROFILE=${{ env.PROFILE }} \
