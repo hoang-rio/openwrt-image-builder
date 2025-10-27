@@ -146,7 +146,7 @@ jobs:
           PROFILE=${{ env.PROFILE }} \
           PACKAGES="${{ env.PACKAGES }}" \
           DISABLED_SERVICES="${{ env.DISABLED_SERVICES }}" \
-          FILES="${{ env.FILES }}" \
+          FILES="${{ env.FILES }}"
           ls -lah bin/targets/${{ env.OPENWRT_TARGET }}
 
       - name: Upload sysupgrade output
