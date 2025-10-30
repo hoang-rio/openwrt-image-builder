@@ -53,4 +53,7 @@ stop_service() {
 
 chmod +x /etc/init.d/tailscale
 
+uci set dhcp.@dnsmasq[0].port='54'
+uci commit dhcp
+
 exit 0
