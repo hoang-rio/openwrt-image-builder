@@ -56,4 +56,7 @@ chmod +x /etc/init.d/tailscale
 uci set dhcp.@dnsmasq[0].port='54'
 uci commit dhcp
 
+# Fix aria2 start issue. Refer https://github.com/aria2/aria2/issues/2152#issuecomment-2685168902
+sed -i -e 's/section" log/section" log\n        procd_add_jail_mount "\/usr\/lib" #fix "errorCode=1 OSSL_PROVIDER_load 'legacy' failed"/g' /etc/init.d/aria2 
+
 exit 0
