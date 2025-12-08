@@ -59,6 +59,7 @@ env:
   OUTPUT_BASE_NAME: ""
   BUILDER_FILE_EXT: ".xz"
   OPENWRT_PACKAGE_VERSION: "24.10.4"
+  KWRT_BUILD_DATE: "12.05.2025"
 
 jobs:
   build-image:
@@ -182,7 +183,7 @@ jobs:
             ### Build information:
             * Build target: **${{ env.OPENWRT_TARGET }}**
             * Device profile: **${{ env.PROFILE }}**
-            * Kwrt version: **${{ env.OPENWRT_VERSION }}**
+            * Kwrt version: **${{ env.KWRT_BUILD_DATE }}-${{ env.OPENWRT_VERSION }}** _(Date format: MM.DD.YYYY)_
             * Image builder downloaded from: ${{ env.IMAGE_BUILDER_URL }}
             <details>
             <summary>Installed package</summary>
