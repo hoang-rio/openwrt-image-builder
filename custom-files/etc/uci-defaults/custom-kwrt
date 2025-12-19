@@ -17,5 +17,7 @@ fi
 if ! grep -q "src/gz openwrt_luci" /etc/opkg/customfeeds.conf; then
     echo "src/gz openwrt_luci https://downloads.openwrt.org/releases/24.10.4/packages/aarch64_cortex-a53/luci" >> /etc/opkg/customfeeds.conf
 fi
+# Remove admin status link file
+rm -rf  /usr/lib/lua/luci/view/admin_status/index/links.htm
 
 exit 0
