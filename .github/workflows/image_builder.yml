@@ -92,10 +92,10 @@ jobs:
           echo "OUTPUT_BASE_NAME=${OUTPUT_BASE_NAME}" >> $GITHUB_ENV
 
       - name: Restore cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ${{ env.IMAGE_BUILDER_FILE_NAME }}
-          key: ${{ env.IMAGE_BUILDER_FILE_NAME }}
+          key: ${{ env.IMAGE_BUILDER_FILE_NAME }}-${{ env.KWRT_BUILD_DATE }}
 
       - name: Check file 
         shell: bash
@@ -131,10 +131,10 @@ jobs:
 
       - name: Save cache
         if: ${{ env.NEED_DOWNLOAD == 'true' }}
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ${{ env.IMAGE_BUILDER_FILE_NAME }}
-          key: ${{ env.IMAGE_BUILDER_FILE_NAME }}
+          key: ${{ env.IMAGE_BUILDER_FILE_NAME }}-${{ env.KWRT_BUILD_DATE }}
       - name: Build kwrt image
         run: |
           cd ${{ env.IMAGE_BUILDER_FILE_NAME }}
