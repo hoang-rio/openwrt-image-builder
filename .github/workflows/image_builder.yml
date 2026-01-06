@@ -69,7 +69,7 @@ jobs:
     steps:
       - name: Checkout if needed
         uses: actions/checkout@v4
-        if: ${{ env.BUILD_CUSTOM_PACKAGE }}
+        if: ${{ env.BUILD_CUSTOM_PACKAGE == 'true' }}
 
       - name: Setup variables
         run: |
@@ -118,7 +118,7 @@ jobs:
           fi
 
       - name: Copy custom packages and add custom package
-        if: ${{ env.BUILD_CUSTOM_PACKAGE }}
+        if: ${{ env.BUILD_CUSTOM_PACKAGE == 'true' }}
         run: |
           rsync -hav custom-packages/* ${{env.IMAGE_BUILDER_FILE_NAME}}/packages/
           echo "PACKAGES=${{env.PACKAGES}} ${{env.CUSTOM_PACKAGE_NAMES}}" >> $GITHUB_ENV
