@@ -17,4 +17,8 @@ dguardhome announce aria2 aria2-openssl ariang base-files block-mount busybox ca
 
 <details>
 <summary>Disabled services</summary>
+
+```
+tailscale
+```
 </details>
