@@ -58,8 +58,8 @@ env:
   BUILD_TARGET_DIR: ""
   OUTPUT_BASE_NAME: ""
   BUILDER_FILE_EXT: ".xz"
-  OPENWRT_PACKAGE_VERSION: "25.12.0"
-  KWRT_BUILD_DATE: "12.28.2025"
+  OPENWRT_PACKAGE_VERSION: "25.12.0-rc5"
+  KWRT_BUILD_DATE: "02.22.2025"
 
 jobs:
   build-image:
@@ -69,7 +69,7 @@ jobs:
     steps:
       - name: Checkout if needed
         uses: actions/checkout@v4
-        if: ${{ env.BUILD_CUSTOM_PACKAGE == 'true' }}
+        if: ${{ env.BUILD_CUSTOM_PACKAGE == 'true' || env.COPY_CUSTOM_FILES == 'true' }}
 
       - name: Setup variables
         run: |
@@ -124,7 +124,7 @@ jobs:
           echo "PACKAGES=${{env.PACKAGES}} ${{env.CUSTOM_PACKAGE_NAMES}}" >> $GITHUB_ENV
 
       - name: Copy custom files to image builder
-        if: ${{ env.COPY_CUSTOM_FILES }}
+        if: ${{ env.COPY_CUSTOM_FILES == 'true' }}
         run: |
           rsync -hav custom-files/* ${{env.IMAGE_BUILDER_FILE_NAME}}/files/
           echo "FILES=files" >> $GITHUB_ENV
