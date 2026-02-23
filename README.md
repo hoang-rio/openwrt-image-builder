@@ -5,7 +5,7 @@ This repo create actions follow instruction at https://openwrt.org/docs/guide-us
 
 * Build target: **mediatek/filogic**
 * Device profile: **cmcc_rax3000m-nand**
-* Kwrt version: **12.28.2025-25.12** _(Date format: MM.DD.YYYY)_
+* Kwrt version: **02.22.2026-25.12** _(Date format: MM.DD.YYYY)_
 * Image builder downloaded from: https://dl.openwrt.ai/releases/25.12/targets/mediatek/filogic/kwrt-imagebuilder-mediatek-filogic.Linux-x86_64.tar.zst
 <details>
 <summary>Installed package</summary>
