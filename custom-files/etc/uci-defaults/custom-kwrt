@@ -12,10 +12,10 @@ sed -i -e 's/section" log/section" log\n        procd_add_jail_mount "\/usr\/lib
 
 # Add custom openwrt custom feeds
 if ! grep -q "src/gz openwrt_packages" /etc/opkg/customfeeds.conf; then
-    echo "src/gz openwrt_packages https://downloads.openwrt.org/releases/25.12.0-rc5/packages/aarch64_cortex-a53/packages" >> /etc/opkg/customfeeds.conf
+    echo "src/gz openwrt_packages https://downloads.openwrt.org/releases/24.10.5/packages/aarch64_cortex-a53/packages" >> /etc/opkg/customfeeds.conf
 fi
 if ! grep -q "src/gz openwrt_luci" /etc/opkg/customfeeds.conf; then
-    echo "src/gz openwrt_luci https://downloads.openwrt.org/releases/25.12.0-rc5/packages/aarch64_cortex-a53/luci" >> /etc/opkg/customfeeds.conf
+    echo "src/gz openwrt_luci https://downloads.openwrt.org/releases/24.10.5/packages/aarch64_cortex-a53/luci" >> /etc/opkg/customfeeds.conf
 fi
 # Remove admin status link file
 rm -rf  /usr/lib/lua/luci/view/admin_status/index/links.htm
