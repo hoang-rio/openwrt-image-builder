@@ -39,6 +39,10 @@ on:
       DISABLED_SERVICES:
         description: List of service to disable startup
         default: https-dns-proxy
+      USE_OPENWRT_PACKAGE_REPO:
+        description: Use openwrt package repo
+        type: boolean
+        default: false
 
 env:
   BUILD_CUSTOM_PACKAGE: ${{github.event_name == 'push' || inputs.BUILD_CUSTOM_PACKAGE}}
@@ -60,6 +64,7 @@ env:
   BUILDER_FILE_EXT: ".xz"
   OPENWRT_PACKAGE_VERSION: "25.12.0-rc5"
   KWRT_BUILD_DATE: "02.22.2025"
+  USE_OPENWRT_PACKAGE_REPO: ${{github.event_name == 'push' || inputs.USE_OPENWRT_PACKAGE_REPO}}
 
 jobs:
   build-image:
@@ -144,8 +149,10 @@ jobs:
           sed -i 's|src |src/gz |g' repositories.conf
           # add openwrt repository for missing packages
           echo "# Openwrt repo for missing package" >> repositories.conf
-          echo "src/gz openwrt_packages https://downloads.openwrt.org/releases/${{ env.OPENWRT_PACKAGE_VERSION }}/packages/aarch64_cortex-a53/packages" >> repositories.conf
-          echo "src/gz openwrt_luci https://downloads.openwrt.org/releases/${{ env.OPENWRT_PACKAGE_VERSION }}/packages/aarch64_cortex-a53/luci" >> repositories.conf
+          if [[ "${{env.USE_OPENWRT_PACKAGE_REPO}}" == "true" ]]; then
+            echo "src/gz openwrt_packages https://downloads.openwrt.org/releases/${{ env.OPENWRT_PACKAGE_VERSION }}/packages/aarch64_cortex-a53/packages" >> repositories.conf
+            echo "src/gz openwrt_luci https://downloads.openwrt.org/releases/${{ env.OPENWRT_PACKAGE_VERSION }}/packages/aarch64_cortex-a53/luci" >> repositories.conf
+          fi
           cat repositories.conf
           make image \
           PROFILE=${{ env.PROFILE }} \
