@@ -53,6 +53,7 @@ env:
   BUILD_TARGET_DIR: ""
   OUTPUT_BASE_NAME: ""
   BUILDER_FILE_EXT: ".xz"
+  CACHE_VERSION: "v2"
 
 jobs:
   build-image:
@@ -87,8 +88,11 @@ jobs:
       - name: Restore cache
         uses: actions/cache/restore@v4
         with:
-          path: ${{ env.IMAGE_BUILDER_FILE_NAME }}
-          key: ${{ env.IMAGE_BUILDER_FILE_NAME }}
+          path: |
+            ${{ env.IMAGE_BUILDER_FILE_NAME }}
+            !${{ env.IMAGE_BUILDER_FILE_NAME }}/packages
+            !${{ env.IMAGE_BUILDER_FILE_NAME }}/dl
+          key: ${{ env.IMAGE_BUILDER_FILE_NAME }}-${{ env.CACHE_VERSION }}
 
       - name: Check file 
         shell: bash
@@ -120,12 +124,17 @@ jobs:
         if: ${{ env.NEED_DOWNLOAD == 'true' }}
         uses: actions/cache/save@v4
         with:
-          path: ${{ env.IMAGE_BUILDER_FILE_NAME }}
-          key: ${{ env.IMAGE_BUILDER_FILE_NAME }}
+          path: |
+            ${{ env.IMAGE_BUILDER_FILE_NAME }}
+            !${{ env.IMAGE_BUILDER_FILE_NAME }}/packages
+            !${{ env.IMAGE_BUILDER_FILE_NAME }}/dl
+          key: ${{ env.IMAGE_BUILDER_FILE_NAME }}-${{ env.CACHE_VERSION }}
 
       - name: Build openwrt image
         run: |
           cd ${{ env.IMAGE_BUILDER_FILE_NAME }}
+          # Avoid stale package metadata when cache is restored.
+          rm -f packages/*/APKINDEX* packages/*/Packages* 2>/dev/null || true
           make image \
           PROFILE=${{ env.PROFILE }} \
           DISABLED_SERVICES="${{ env.DISABLED_SERVICES }}" \
