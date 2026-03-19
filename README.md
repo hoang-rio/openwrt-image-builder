@@ -5,7 +5,7 @@ This repo create actions follow instruction at https://openwrt.org/docs/guide-us
 
 * Build target: **mediatek/filogic**
 * Device profile: **cudy_tr3000-v1**
-* Openwrt version: **25.12.0**
+* Openwrt version: **25.12.1**
 * Image builder downloaded from: https://downloads.openwrt.org/releases/25.12.0/targets/mediatek/filogic/openwrt-imagebuilder-25.12.0-ramips-mt7621.Linux-x86_64.tar.zst
 <details>
 <summary>Installed package</summary>
