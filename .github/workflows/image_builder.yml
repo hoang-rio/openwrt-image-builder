@@ -61,7 +61,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout if needed
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         if: ${{ env.BUILD_CUSTOM_PACKAGE == 'true' }}
 
       - name: Setup variables
@@ -85,7 +85,7 @@ jobs:
           echo "OUTPUT_BASE_NAME=${OUTPUT_BASE_NAME}" >> $GITHUB_ENV
 
       - name: Restore cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ${{ env.IMAGE_BUILDER_FILE_NAME }}
           key: ${{ env.IMAGE_BUILDER_FILE_NAME }}
@@ -118,7 +118,7 @@ jobs:
 
       - name: Save cache
         if: ${{ env.NEED_DOWNLOAD == 'true' }}
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ${{ env.IMAGE_BUILDER_FILE_NAME }}
           key: ${{ env.IMAGE_BUILDER_FILE_NAME }}
@@ -152,7 +152,7 @@ jobs:
           retention-days: 5
 
       - name: Create release
-        uses: ncipollo/release-action@v1.14.0
+        uses: ncipollo/release-action@v1.21.0
         if: ${{ github.event_name == 'push' }}
         with:
           name: "${{ github.ref_name }}"
