@@ -73,7 +73,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout if needed
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         if: ${{ env.BUILD_CUSTOM_PACKAGE == 'true' || env.COPY_CUSTOM_FILES == 'true' }}
 
       - name: Setup variables
@@ -183,7 +183,7 @@ jobs:
           retention-days: 5
 
       - name: Create release
-        uses: ncipollo/release-action@v1.14.0
+        uses: ncipollo/release-action@v1.21.0
         if: ${{ github.event_name == 'push' }}
         with:
           name: "${{ github.ref_name }}"
