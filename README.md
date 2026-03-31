@@ -5,8 +5,8 @@ This repo create actions follow instruction at https://openwrt.org/docs/guide-us
 
 * Build target: **ramips/mt7621**
 * Device profile: **jcg_q20**
-* Openwrt version: **25.12.1**
-* Image builder downloaded from: https://downloads.openwrt.org/releases/25.12.1/targets/ramips/mt7621/openwrt-imagebuilder-25.12.1-ramips-mt7621.Linux-x86_64.tar.zst
+* Openwrt version: **25.12.2**
+* Image builder downloaded from: https://downloads.openwrt.org/releases/25.12.2/targets/ramips/mt7621/openwrt-imagebuilder-25.12.2-ramips-mt7621.Linux-x86_64.tar.zst
 <details>
 <summary>Installed package</summary>
 
