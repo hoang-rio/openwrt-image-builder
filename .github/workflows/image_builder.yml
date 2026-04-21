@@ -61,7 +61,7 @@ env:
   NEED_DOWNLOAD: true
   BUILD_TARGET_DIR: ""
   OUTPUT_BASE_NAME: ""
-  BUILDER_FILE_EXT: ".xz"
+  BUILDER_FILE_EXT: ".zst"
   OPENWRT_PACKAGE_VERSION: "24.10.6"
   KWRT_BUILD_DATE: "03.31.2026"
   USE_OPENWRT_PACKAGE_REPO: ${{github.event_name == 'push' || inputs.USE_OPENWRT_PACKAGE_REPO}}
@@ -82,10 +82,10 @@ jobs:
           OPENWRT_TARGET_AS_NAME=${OPENWRT_TARGET////-}
           IMAGE_BUILDER_FILE_NAME=kwrt-imagebuilder-${OPENWRT_TARGET_AS_NAME}.Linux-x86_64
           IMAGE_BUILDER_URL=${{ env.OPENWRT_DOWNLOAD_URL }}/${{ env.OPENWRT_VERSION }}/targets/$OPENWRT_TARGET/$IMAGE_BUILDER_FILE_NAME.tar
-          CURL_OUTPUT=$(curl --HEAD ${IMAGE_BUILDER_URL}.xz)
           BUILDER_FILE_EXT=${{ env.BUILDER_FILE_EXT }}
+          CURL_OUTPUT=$(curl --HEAD ${IMAGE_BUILDER_URL}${BUILDER_FILE_EXT})
           if [[ $(echo $CURL_OUTPUT | grep "404") != "" ]]; then
-            BUILDER_FILE_EXT=".zst"
+            BUILDER_FILE_EXT=".xz"
             echo "BUILDER_FILE_EXT=${BUILDER_FILE_EXT}" >> $GITHUB_ENV
           fi
           IMAGE_BUILDER_URL=${IMAGE_BUILDER_URL}${BUILDER_FILE_EXT}
