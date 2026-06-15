@@ -22,4 +22,4 @@ https-dns-proxy
 ```
 </details>
 
-[Download sysupgrade image](https://github.com/hoang-rio/openwrt-image-builder/releases/latest/download/kwrt-mediatek-filogic-cmcc_rax3000m-nand-squashfs-sysupgrade.bin)
+[Download sysupgrade image](https://github.com/hoang-rio/openwrt-image-builder/releases/download/cmcc_rax3000m%2F06.10.2026-kwrt-25.12/kwrt-mediatek-filogic-cmcc_rax3000m-nand-squashfs-sysupgrade.bin)
