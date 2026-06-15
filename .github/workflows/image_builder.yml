@@ -22,7 +22,7 @@ on:
         default: https://downloads.openwrt.org/releases
       OPENWRT_VERSION:
         description: Openwrt version
-        default: 25.12.2
+        default: 25.12.4
       OPENWRT_TARGET:
         description: Openwrt target to build
         default: ramips/mt7621
@@ -176,6 +176,8 @@ jobs:
             ```
             ${{ env.DISABLED_SERVICES }}
             ```
-            [Download sysupgrade image](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/${{ env.OUTPUT_BASE_NAME }}-squashfs-sysupgrade.bin)
             </details>
+
+            Download sysupgrade image below:
+            [Download sysupgrade image](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/${{ env.OUTPUT_BASE_NAME }}-squashfs-sysupgrade.bin)
 
