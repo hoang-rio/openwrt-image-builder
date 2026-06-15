@@ -23,4 +23,4 @@ tailscale
 ```
 </details>
 
-[Download sysupgrade image](https://github.com/hoang-rio/openwrt-image-builder/releases/latest/download/openwrt-25.12.4-mediatek-filogic-cudy_tr3000-v1-squashfs-sysupgrade.bin)
+[Download sysupgrade image](https://github.com/hoang-rio/openwrt-image-builder/releases/download/cudy_tr3000-v1%2F25.12.4/openwrt-25.12.4-mediatek-filogic-cudy_tr3000-v1-squashfs-sysupgrade.bin)
