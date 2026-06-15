@@ -22,3 +22,6 @@ adguardhome announce apk-mbedtls base-files block-mount busybox ca-bundle cgi-io
 tailscale
 ```
 </details>
+
+Download sysupgrade image below:
+[Download sysupgrade image](https://github.com/hoang-rio/openwrt-image-builder/releases/latest/download/openwrt-25.12.4-mediatek-filogic-cudy_tr3000-v1-squashfs-sysupgrade.bin)
