@@ -22,5 +22,4 @@ base-files busybox ca-bundle cgi-io curl ddns-scripts ddns-scripts-services dnsm
 ```
 </details>
 
-Download sysupgrade image below:
 [Download sysupgrade image](https://github.com/hoang-rio/openwrt-image-builder/releases/latest/download/openwrt-25.12.4-ramips-mt7621-jcg_q20-squashfs-sysupgrade.bin)
