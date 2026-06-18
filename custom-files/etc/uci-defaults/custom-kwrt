@@ -26,7 +26,7 @@ fi
 if ! grep -q "src/gz openwrt_base" /etc/opkg/customfeeds.conf; then
     echo "src/gz openwrt_base https://downloads.openwrt.org/releases/$OPENWRT_PACKAGE_VERSION/packages/aarch64_cortex-a53/base" >> /etc/opkg/customfeeds.conf
 else
-    sed -i "s|src/gz openwrt_base .*|src/gz openwrt_luci https://downloads.openwrt.org/releases/$OPENWRT_PACKAGE_VERSION/packages/aarch64_cortex-a53/base|" /etc/opkg/customfeeds.conf
+    sed -i "s|src/gz openwrt_base .*|src/gz openwrt_base https://downloads.openwrt.org/releases/$OPENWRT_PACKAGE_VERSION/packages/aarch64_cortex-a53/base|" /etc/opkg/customfeeds.conf
 fi
 # Remove admin status link file
 rm -rf  /usr/lib/lua/luci/view/admin_status/index/links.htm
