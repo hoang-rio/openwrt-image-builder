@@ -5,8 +5,8 @@ This repo create actions follow instruction at https://openwrt.org/docs/guide-us
 
 * Build target: **mediatek/filogic**
 * Device profile: **cudy_tr3000-v1**
-* Openwrt version: **25.12.4**
-* Image builder downloaded from: https://downloads.openwrt.org/releases/25.12.4/targets/mediatek/filogic/openwrt-imagebuilder-25.12.4-ramips-mt7621.Linux-x86_64.tar.zst
+* Openwrt version: **25.12.5**
+* Image builder downloaded from: https://downloads.openwrt.org/releases/25.12.5/targets/mediatek/filogic/openwrt-imagebuilder-25.12.5-ramips-mt7621.Linux-x86_64.tar.zst
 <details>
 <summary>Installed package</summary>
 
@@ -23,4 +23,4 @@ tailscale
 ```
 </details>
 
-[Download sysupgrade image](https://github.com/hoang-rio/openwrt-image-builder/releases/download/cudy_tr3000-v1%2F25.12.4/openwrt-25.12.4-mediatek-filogic-cudy_tr3000-v1-squashfs-sysupgrade.bin)
+[Download sysupgrade image](https://github.com/hoang-rio/openwrt-image-builder/releases/download/cudy_tr3000-v1%2F25.12.5/openwrt-25.12.5-mediatek-filogic-cudy_tr3000-v1-squashfs-sysupgrade.bin)
