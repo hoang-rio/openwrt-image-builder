@@ -5,8 +5,8 @@ This repo create actions follow instruction at https://openwrt.org/docs/guide-us
 
 * Build target: **ramips/mt7621**
 * Device profile: **jcg_q20**
-* Openwrt version: **25.12.4**
-* Image builder downloaded from: https://downloads.openwrt.org/releases/25.12.4/targets/ramips/mt7621/openwrt-imagebuilder-25.12.4-ramips-mt7621.Linux-x86_64.tar.zst
+* Openwrt version: **25.12.5**
+* Image builder downloaded from: https://downloads.openwrt.org/releases/25.12.5/targets/ramips/mt7621/openwrt-imagebuilder-25.12.5-ramips-mt7621.Linux-x86_64.tar.zst
 <details>
 <summary>Installed package</summary>
 
@@ -22,4 +22,4 @@ base-files busybox ca-bundle cgi-io curl ddns-scripts ddns-scripts-services dnsm
 ```
 </details>
 
-[Download sysupgrade image](https://github.com/hoang-rio/openwrt-image-builder/releases/download/jcg_q20%2F25.12.4/openwrt-25.12.4-ramips-mt7621-jcg_q20-squashfs-sysupgrade.bin)
+[Download sysupgrade image](https://github.com/hoang-rio/openwrt-image-builder/releases/download/jcg_q20%2F25.12.5/openwrt-25.12.5-ramips-mt7621-jcg_q20-squashfs-sysupgrade.bin)
