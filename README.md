@@ -5,7 +5,7 @@ This repo create actions follow instruction at https://openwrt.org/docs/guide-us
 
 * Build target: **mediatek/filogic**
 * Device profile: **cmcc_rax3000m-nand**
-* Kwrt version: **06.10.2026-25.12** _(Date format: MM.DD.YYYY)_
+* Kwrt version: **07.15.2026-25.12** _(Date format: MM.DD.YYYY)_
 * Image builder downloaded from: https://dl.openwrt.ai/releases/25.12/targets/mediatek/filogic/kwrt-imagebuilder-mediatek-filogic.Linux-x86_64.tar.zst
 <details>
 <summary>Installed package</summary>
@@ -22,4 +22,4 @@ https-dns-proxy
 ```
 </details>
 
-[Download sysupgrade image](https://github.com/hoang-rio/openwrt-image-builder/releases/download/cmcc_rax3000m%2F06.10.2026-kwrt-25.12/kwrt-mediatek-filogic-cmcc_rax3000m-nand-squashfs-sysupgrade.bin)
+[Download sysupgrade image](https://github.com/hoang-rio/openwrt-image-builder/releases/download/cmcc_rax3000m%2F07.15.2026-kwrt-25.12/kwrt-mediatek-filogic-cmcc_rax3000m-nand-squashfs-sysupgrade.bin)
