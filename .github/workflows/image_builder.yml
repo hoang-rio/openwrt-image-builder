@@ -13,7 +13,7 @@ on:
       COPY_CUSTOM_FILES:
         description: Copy custom files inside "custom-files" to image builder
         type: boolean
-        default: false
+        default: true
       CUSTOM_PACKAGE_NAMES:
         description: Name of all custom package inside "custom-packages"
         default: luci-app-alpha-config luci-theme-alpha
@@ -122,6 +122,13 @@ jobs:
             tar -J -x -f ${IMAGE_BUILD_FILE}
           fi
 
+      - name: Save cache
+        if: ${{ env.NEED_DOWNLOAD == 'true' }}
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ env.IMAGE_BUILDER_FILE_NAME }}
+          key: ${{ env.IMAGE_BUILDER_FILE_NAME }}-${{ env.KWRT_BUILD_DATE }}
+
       - name: Copy custom packages and add custom package
         if: ${{ env.BUILD_CUSTOM_PACKAGE == 'true' }}
         run: |
@@ -132,18 +139,18 @@ jobs:
         if: ${{ env.COPY_CUSTOM_FILES == 'true' }}
         run: |
           rsync -hav custom-files/* ${{env.IMAGE_BUILDER_FILE_NAME}}/files/
-          # Replace $OPENWRT_PACKAGE_VERSION with env.OPENWRT_PACKAGE_VERSION in custom-kwrt
-          sed -i "s|\$OPENWRT_PACKAGE_VERSION|${{ env.OPENWRT_PACKAGE_VERSION }}|g" ${{env.IMAGE_BUILDER_FILE_NAME}}/files/etc/uci-defaults/custom-kwrt
+          # Fail loudly instead of shipping an image with no uci-defaults script
+          test -x ${{env.IMAGE_BUILDER_FILE_NAME}}/files/etc/uci-defaults/custom-kwrt \
+            || { echo "::error::custom-kwrt missing from files/ after rsync"; exit 1; }
           echo "FILES=files" >> $GITHUB_ENV
 
-      - name: Save cache
-        if: ${{ env.NEED_DOWNLOAD == 'true' }}
-        uses: actions/cache/save@v5
-        with:
-          path: ${{ env.IMAGE_BUILDER_FILE_NAME }}
-          key: ${{ env.IMAGE_BUILDER_FILE_NAME }}-${{ env.KWRT_BUILD_DATE }}
       - name: Build kwrt image
+
         run: |
+          if [[ "${{env.COPY_CUSTOM_FILES}}" == "true" && -z "${{env.FILES}}" ]]; then
+            echo "::error::COPY_CUSTOM_FILES is true but FILES is empty - custom-kwrt would be missing from the image"
+            exit 1
+          fi
           cd ${{ env.IMAGE_BUILDER_FILE_NAME }}
           # switch to online repository
           sed -i 's|file://www/wwwroot/|https://|g' repositories.conf
@@ -163,6 +170,15 @@ jobs:
           FILES="${{ env.FILES }}" \
           DISABLED_SERVICES="${{ env.DISABLED_SERVICES }}"
           ls -lah bin/targets/${{ env.OPENWRT_TARGET }}
+          # Verify the uci-defaults script really landed in the built rootfs.
+          # Warning-only: the staging dir name varies between image builders.
+          if [[ "${{env.COPY_CUSTOM_FILES}}" == "true" ]]; then
+            if find bin/targets/${{ env.OPENWRT_TARGET }} -path '*/etc/uci-defaults/custom-kwrt' | grep -q .; then
+              echo "OK: custom-kwrt present in built rootfs"
+            else
+              echo "::warning::could not confirm custom-kwrt in built rootfs - verify manually"
+            fi
+          fi
 
       - name: Upload sysupgrade output
         if: ${{ github.event_name == 'workflow_dispatch' && env.UPLOAD_SYSUPGRADE_ONLY == 'true' }}

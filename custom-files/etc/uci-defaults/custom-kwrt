@@ -2,7 +2,12 @@
 # Custom script to run at first boot
 # Place your custom commands below
 
-opkg remove --autoremove luci-app-wizard luci-app-upnp luci-app-attendedsysupgrade $(opkg list-installed | grep zh-cn | sed -e "s/\s.*$//")
+LOG=/tmp/custom-kwrt.log
+log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" >> "$LOG"; }
+
+log "custom-kwrt start"
+
+opkg remove --autoremove luci-app-wizard luci-app-upnp luci-app-attendedsysupgrade $(opkg list-installed | grep zh-cn | sed -e "s/\s.*$//") || log "opkg remove failed"
 
 uci set dhcp.@dnsmasq[0].port='54'
 uci commit dhcp
@@ -11,24 +16,33 @@ service dnsmasq restart
 # Fix aria2 start issue. Refer https://github.com/aria2/aria2/issues/2152#issuecomment-2685168902
 sed -i -e 's/section" log/section" log\n        procd_add_jail_mount "\/usr\/lib" #fix "errorCode=1 OSSL_PROVIDER_load 'legacy' failed"/g' /etc/init.d/aria2
 
-# Add custom openwrt custom feeds
-if ! grep -q "src/gz openwrt_packages" /etc/opkg/customfeeds.conf; then
-    echo "src/gz openwrt_packages https://downloads.openwrt.org/releases/$OPENWRT_PACKAGE_VERSION/packages/aarch64_cortex-a53/packages" >> /etc/opkg/customfeeds.conf
-else
-    sed -i "s|src/gz openwrt_packages .*|src/gz openwrt_packages https://downloads.openwrt.org/releases/$OPENWRT_PACKAGE_VERSION/packages/aarch64_cortex-a53/packages|" /etc/opkg/customfeeds.conf
-fi
+# Add custom openwrt feeds
+# NOTE: these must stay plain literals - no build-time substitution, so that CI
+# and local `make image FILES=files` builds produce an identical script.
+OPENWRT_UPSTREAM_RELEASE="24.10.8"
+FEED_ARCH="$(sed -n 's/^DISTRIB_ARCH=//p' /etc/openwrt_release)"
+FEED_ARCH="${FEED_ARCH:-aarch64_cortex-a53}"
+FEED_BASE="https://downloads.openwrt.org/releases/${OPENWRT_UPSTREAM_RELEASE}/packages/${FEED_ARCH}"
 
-if ! grep -q "src/gz openwrt_luci" /etc/opkg/customfeeds.conf; then
-    echo "src/gz openwrt_luci https://downloads.openwrt.org/releases/$OPENWRT_PACKAGE_VERSION/packages/aarch64_cortex-a53/luci" >> /etc/opkg/customfeeds.conf
-else
-    sed -i "s|src/gz openwrt_luci .*|src/gz openwrt_luci https://downloads.openwrt.org/releases/$OPENWRT_PACKAGE_VERSION/packages/aarch64_cortex-a53/luci|" /etc/opkg/customfeeds.conf
-fi
-if ! grep -q "src/gz openwrt_base" /etc/opkg/customfeeds.conf; then
-    echo "src/gz openwrt_base https://downloads.openwrt.org/releases/$OPENWRT_PACKAGE_VERSION/packages/aarch64_cortex-a53/base" >> /etc/opkg/customfeeds.conf
-else
-    sed -i "s|src/gz openwrt_base .*|src/gz openwrt_base https://downloads.openwrt.org/releases/$OPENWRT_PACKAGE_VERSION/packages/aarch64_cortex-a53/base|" /etc/opkg/customfeeds.conf
-fi
+mkdir -p /etc/opkg
+touch /etc/opkg/customfeeds.conf
+
+add_feed() {
+    if grep -q "^src/gz $1 " /etc/opkg/customfeeds.conf; then
+        sed -i "s|^src/gz $1 .*|src/gz $1 $FEED_BASE/$2|" /etc/opkg/customfeeds.conf
+    else
+        echo "src/gz $1 $FEED_BASE/$2" >> /etc/opkg/customfeeds.conf
+    fi
+    log "feed $1 -> $FEED_BASE/$2"
+}
+
+add_feed openwrt_packages packages
+add_feed openwrt_luci luci
+add_feed openwrt_base base
+
 # Remove admin status link file
 rm -rf  /usr/lib/lua/luci/view/admin_status/index/links.htm
+
+log "custom-kwrt done"
 
 exit 0
