@@ -20,7 +20,7 @@ sed -i -e 's/section" log/section" log\n        procd_add_jail_mount "\/usr\/lib
 # NOTE: these must stay plain literals - no build-time substitution, so that CI
 # and local `make image FILES=files` builds produce an identical script.
 OPENWRT_UPSTREAM_RELEASE="24.10.8"
-FEED_ARCH="$(sed -n 's/^DISTRIB_ARCH=//p' /etc/openwrt_release)"
+FEED_ARCH="$(sed -n "s/^DISTRIB_ARCH=//p" /etc/openwrt_release | tr -d "'\"" | tr -d '\r')"
 FEED_ARCH="${FEED_ARCH:-aarch64_cortex-a53}"
 FEED_BASE="https://downloads.openwrt.org/releases/${OPENWRT_UPSTREAM_RELEASE}/packages/${FEED_ARCH}"
 
