@@ -7,7 +7,7 @@ log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" >> "$LOG"; }
 
 log "custom-kwrt start"
 
-opkg remove --autoremove luci-app-wizard luci-app-upnp luci-app-attendedsysupgrade $(opkg list-installed | grep zh-cn | sed -e "s/\s.*$//") || log "opkg remove failed"
+opkg remove --autoremove $(opkg list-installed | grep zh-cn | sed -e "s/\s.*$//") || log "opkg remove failed"
 
 # uci set dhcp.@dnsmasq[0].port='54'
 # uci commit dhcp
