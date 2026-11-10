@@ -16,7 +16,7 @@ on:
         default: true
       CUSTOM_PACKAGE_NAMES:
         description: Name of all custom package inside "custom-packages"
-        default: luci-app-alpha-config luci-theme-alpha
+        default: luci-theme-vantage luci-app-vantage
       UPLOAD_SYSUPGRADE_ONLY:
         description: Save sysupgrade only artifact
         type: boolean
@@ -46,7 +46,7 @@ on:
 
 env:
   BUILD_CUSTOM_PACKAGE: ${{github.event_name == 'push' || inputs.BUILD_CUSTOM_PACKAGE}}
-  CUSTOM_PACKAGE_NAMES: ${{inputs.CUSTOM_PACKAGE_NAMES || 'luci-app-alpha-config luci-theme-alpha'}}
+  CUSTOM_PACKAGE_NAMES: ${{inputs.CUSTOM_PACKAGE_NAMES || 'luci-theme-vantage luci-app-vantage'}}
   COPY_CUSTOM_FILES: ${{github.event_name == 'push' || inputs.COPY_CUSTOM_FILES}}
   FILES: ""
   UPLOAD_SYSUPGRADE_ONLY: ${{inputs.UPLOAD_SYSUPGRADE_ONLY || false}}
