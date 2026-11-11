@@ -162,6 +162,7 @@ jobs:
             echo "src/gz openwrt_packages https://downloads.openwrt.org/releases/${{ env.OPENWRT_PACKAGE_VERSION }}/packages/aarch64_cortex-a53/packages" >> repositories.conf
             echo "src/gz openwrt_luci https://downloads.openwrt.org/releases/${{ env.OPENWRT_PACKAGE_VERSION }}/packages/aarch64_cortex-a53/luci" >> repositories.conf
             echo "src/gz openwrt_base https://downloads.openwrt.org/releases/${{ env.OPENWRT_PACKAGE_VERSION }}/packages/aarch64_cortex-a53/base" >> repositories.conf
+            echo "src/gz vantage https://anothadev.github.io/luci-theme-vantage/24.10" >> repositories.conf
           fi
           cat repositories.conf
           make image \
